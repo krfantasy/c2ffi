@@ -167,7 +167,8 @@ void c2ffi::init_ci(config &c, clang::CompilerInstance &ci) {
     }
 
     // Create the compilers actual diagnostics engine.
-    ci.createDiagnostics();
+    ci.createFileManager();
+    ci.createDiagnostics(ci.getVirtualFileSystem());
     ci.getDiagnostics().setWarningsAsErrors(c.warn_as_error);
     if (c.error_limit >= 0)
       ci.getDiagnostics().setErrorLimit(c.error_limit);
@@ -202,7 +203,6 @@ void c2ffi::init_ci(config &c, clang::CompilerInstance &ci) {
     ci.getInvocation().getLangOpts().setLangDefaults(lo, c.kind.getLanguage(),
                                                       pti->getTriple(), includes, c.std);
     //clang::LangOptions::setLangDefaults(lo, c.kind.getLanguage(), pti->getTriple(), includes, c.std);
-    ci.createFileManager();
     ci.createSourceManager(ci.getFileManager());
 
     // examples/clang-interpreter/main.cpp

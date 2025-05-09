@@ -17,8 +17,8 @@ let
          then import (fetchTarball https://github.com/NixOS/nixpkgs/archive/nixpkgs-unstable.tar.gz) {}
          else import <nixpkgs> {};
 
-  c2ffiBranch = "llvm-18.1.0";
-  llvmPackages = pkgs.llvmPackages_18;
+  c2ffiBranch = "llvm-20.1.0";
+  llvmPackages = pkgs.llvmPackages_20;
 in
 
 llvmPackages.stdenv.mkDerivation {
@@ -40,7 +40,7 @@ llvmPackages.stdenv.mkDerivation {
 
   nativeBuildInputs = with pkgs; [
     cmake
-    clang-tools_18
+    llvmPackages.clang-tools
   ];
 
   buildInputs = with pkgs; [
